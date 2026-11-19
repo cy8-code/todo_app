@@ -9,6 +9,7 @@ export type Todo = {
 };
 
 let client: ReturnType<typeof createClient> | undefined;
+let schemaReady: Promise<void> | undefined;
 
 function getClient() {
   if (client) {
@@ -29,13 +30,25 @@ function getClient() {
 
 async function ensureSchema() {
   const db = getClient();
-  await db.execute(`
-    CREATE TABLE IF NOT EXISTS todos (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      completed INTEGER NOT NULL DEFAULT 0 CHECK (completed IN (0, 1))
-    )
-  `);
+  if (!schemaReady) {
+    schemaReady = db
+      .execute(`
+        CREATE TABLE IF NOT EXISTS todos (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title TEXT NOT NULL,
+          completed INTEGER NOT NULL DEFAULT 0 CHECK (completed IN (0, 1))
+        )
+      `)
+      .then(() => undefined);
+  }
+
+  try {
+    await schemaReady;
+  } catch (error) {
+    schemaReady = undefined;
+    throw error;
+  }
+
   return db;
 }
 
