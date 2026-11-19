@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Todo App
 
-## Getting Started
+간단한 Todo 목록 앱입니다. 데이터는 Turso에 저장합니다.
 
-First, run the development server:
+## 로컬 실행
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+`.env.local`에 다음 환경변수를 설정하세요.
+
+```env
+TURSO_DATABASE_URL=
+TURSO_AUTH_TOKEN=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+npm install
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Vercel 배포
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+GitHub 저장소를 Vercel 프로젝트에 연결한 다음, Vercel 프로젝트 설정의 **Environment Variables**에 `TURSO_DATABASE_URL`과 `TURSO_AUTH_TOKEN`을 등록하세요. Production과 Preview 환경 모두 설정한 뒤 배포합니다. `.env.local`은 GitHub에 올리지 마세요.
 
-## Learn More
+## 접근 권한
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+로그인 없이 공개되는 단일 목록입니다. 배포 주소에 접근할 수 있는 누구나 목록을 읽고, Todo를 추가하고, 완료 상태를 변경하거나 삭제할 수 있습니다. 비밀번호, 개인 정보 등 민감한 내용은 입력하지 마세요.
